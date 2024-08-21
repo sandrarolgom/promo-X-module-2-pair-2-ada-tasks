@@ -3,3 +3,6 @@
     padding: 0;
     margin: 0;
 }
+.line {
+    text-decoration: line-through;
+}

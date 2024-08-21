@@ -12,10 +12,25 @@ const tasks = [
     },
   ];
 
-for (let i = 0; i<tasks.lenght; i++){
-    checkboxList.innerHTML += `
-    <li>
-        <input id="1" type="checkbox">
-        ${tasks[i].name}
-        </li>`
+for (const task of tasks) {
+  let checkLine = '';
+    if (task.completed === true){
+    checkLine = 'line';
+    }
+  checkboxList.innerHTML += `
+    <li class="${checkLine}">
+    <input id="${task.id}" class="check" type="checkbox">
+    ${task.name}
+    </li>`
 }
+
+/*
+ACCIONES AL MARCAR UNA TAREA COMO COMPLETADA:
+  - La tarea debe mostrarse como completada(tachada)
+  - El estado de la tarea se actualizará: la propiedad -completed- de la tarea se cambiará en nuestro array de tareas
+
+. Añadir clase al input?
+. querySelectorAll?
+. Evento click sobre el checkbox
+
+*/
