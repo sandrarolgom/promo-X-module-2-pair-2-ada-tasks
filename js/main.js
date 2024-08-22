@@ -1,6 +1,4 @@
 'use strict';
-const checkboxList = document.querySelector('.js-list');
-
 const tasks = [
     { name: "Recoger setas en el campo", completed: true, id: 1 },
     { name: "Comprar pilas", completed: true, id: 2 },
@@ -11,6 +9,7 @@ const tasks = [
       id: 4,
     },
   ];
+const checkboxList = document.querySelector('.js-list');
 
 for (const task of tasks) {
   let checkLine = '';
