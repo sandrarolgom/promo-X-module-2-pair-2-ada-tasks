@@ -1,5 +1,5 @@
 'use strict';
-const tasks = [
+/*const tasks = [
   { name: 'Recoger setas en el campo', completed: true, id: 1 },
   { name: 'Comprar pilas', completed: true, id: 2 },
   { name: 'Poner una lavadora de blancos', completed: true, id: 3 },
@@ -9,6 +9,13 @@ const tasks = [
     id: 4,
   },
 ];
+*/
+const GITHUB_USER = "Ankaankita1988";
+const SERVER_URL = `https://dev.adalab.es/api/todo/${GITHUB_USER}`;
+
+let tasks =[];
+
+
 
 const listUl = document.querySelector('.js-list');
 /*
@@ -60,3 +67,11 @@ const handleSearch = (event) => {
   renderTasks(filterTasks);
 };
 btnSearch.addEventListener('click', handleSearch);
+
+fetch(SERVER_URL)
+.then(response=>response.json())
+.then(data=>{
+  console.log(data);
+  tasks=data.results;
+  renderTasks(tasks);
+});
