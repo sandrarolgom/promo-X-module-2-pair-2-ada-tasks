@@ -10,14 +10,13 @@
   },
 ];
 */
+
+const listUl = document.querySelector('.js-list');
 const GITHUB_USER = "Ankaankita1988";
 const SERVER_URL = `https://dev.adalab.es/api/todo/${GITHUB_USER}`;
 
 let tasks =[];
 
-
-
-const listUl = document.querySelector('.js-list');
 /*
     escuchar eventos del usuario--> datos de entrada
     modificar mis datos 
@@ -29,6 +28,7 @@ const handleCheckbox = (ev) => {
   const positionTask = tasks.findIndex((task) => task.id === taskClicked);
   tasks[positionTask].completed = !tasks[positionTask].completed;
   renderTasks(tasks);
+  localStorage.setItem('data', JSON.stringify(tasks));
 };
 //escuchar eventos sobre los checkbox
 function listenCheckbox() {
@@ -68,10 +68,26 @@ const handleSearch = (event) => {
 };
 btnSearch.addEventListener('click', handleSearch);
 
-fetch(SERVER_URL)
-.then(response=>response.json())
-.then(data=>{
-  console.log(data);
-  tasks=data.results;
-  renderTasks(tasks);
-});
+
+const tasksLocalStorage = JSON.parse(localStorage.getItem('data'));
+  // si (existe el listado de tareas en Local Storage)
+  console.log(tasksLocalStorage);
+if (tasksLocalStorage !== null) {
+  // pinta la lista de tareas almacenadas en tasksLocalStorage
+  tasks = tasksLocalStorage;
+  renderTasks(tasksLocalStorage);
+}
+//sino existe el listado de tareas en el local storage
+  else {
+  // pide los datos al servidor
+  fetch(SERVER_URL)
+    .then(response=>response.json())
+    .then(data=>{
+    console.log(data);
+    tasks=data.results;
+    renderTasks(tasks);
+
+    localStorage.setItem('data', JSON.stringify(data.results)); //para que salgan los datos en el localstorage
+  });
+   
+}
