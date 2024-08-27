@@ -38,21 +38,24 @@ function listenCheckbox() {
     inputsCheckbox[i].addEventListener('click', handleCheckbox);
   }
 }
-// pintar  lista de tareas
-const renderTasks = (array) => {
-  listUl.innerHTML = '';
-  for (let i = 0; i < array.length; i++) {
-    //cada tarea --> task[i] ->  { name: 'x', completed: x, id: x },
-    listUl.innerHTML += `
-     <li class= "${array[i].completed ? 'line' : null}">
-        <input type="checkbox"  ${
-          array[i].completed ? 'checked' : null
-        } class="js-checkbox" id="${array[i].id}"/>
-        ${array[i].name}
-    </li>
-    `;
-  }
 
+const renderTasks = (array) =>{
+  listUl.innerHTML='';
+  for (let i = 0; i < array.length; i++) {
+      const liElement = document.createElement('li');
+      listUl.appendChild(liElement);
+      liElement.setAttribute('class', `${array[i].completed ? 'line' : null}`);
+      const setInput = document.createElement('input');
+      setInput.setAttribute('type', 'checkbox');
+      liElement.appendChild(setInput);
+      setInput.setAttribute('class', 'js-checkbox');
+      setInput.setAttribute('id', `${array[i].id}`);
+      if(array[i].completed){
+        setInput.checked=true
+      }
+      const liElementText = document.createTextNode(`${array[i].name}`);
+      liElement.appendChild(liElementText);     
+  }
   listenCheckbox();
 };
 renderTasks(tasks);
@@ -89,5 +92,4 @@ if (tasksLocalStorage !== null) {
 
     localStorage.setItem('data', JSON.stringify(data.results)); //para que salgan los datos en el localstorage
   });
-   
 }
